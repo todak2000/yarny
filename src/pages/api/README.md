@@ -1,0 +1,214 @@
+# Yarny Socila Media Platform API documentation
+
+This is the Offical API documentation for Yarny Social Media platform project built using Next.js, React, TypeScript,Web5 and other technologies. The project aims to create a user-friendly website where users own their content, have and manage their privacy, and enables seamless content monetization
+
+API endpoints can be found [here](src/pages/api/index.tsx) at `src/pages/api/index.tsx`.
+
+ONCE AGAIN ensure that you have a Firebase account and a project with Firestore database enabled as it would require that the Firebase api keys and other variables be used. Kindly refer to `.env.example` for guidance.
+
+## Installation
+
+Provided you follow the instructions [here](README.md): `README.md`. you have nothing else to do
+
+## Web 5 Features Endpoints
+
+, deleteUser, getSingleUser, getUsers, updateUser
+This project implements the following web 5 features endpoints:
+
+### Creating New User Data (DID) on the DWN
+
+**createNewUser()**
+
+**Description:**
+
+The `createNewUser` function is used sign up users into the web5 network seamlessly providng the following data.
+
+**Parameters:**
+{
+personalDetails: {
+firstname: string;
+lastname: string;
+phone: string;
+email: string;
+photo: string;
+dateOfBirth: string;
+gender: string;
+};
+web5: {
+didResolverName: string;
+didResolverPassword: string;
+identifier: string;
+};
+others: {
+datePublished: string;
+};
+}
+
+**Returns:**
+
+```
+<!-- success result -->
+  {
+    status: number,
+    message: string,
+    recordId: string,
+    userDiD: string,
+  }
+  <!-- OR -->
+  <!-- failure result -->
+  {
+      status: number;
+      message: string;
+  }
+```
+
+### Updating Existing User Data (DID) on the DWN
+
+**updateUser()**
+
+**Description:**
+
+The `updateUser` function is used update user data exisitng in their local/remote DWN on the web5 network seamlessly providng the following data.
+
+**Parameters:**
+
+```
+  {
+    recordId: string,
+    updateData: {
+      personalDetails: {
+        firstname: string;
+        lastname: string;
+        phone: string;
+        email: string;
+        photo: string;
+        dateOfBirth: string;
+        gender: string;
+      };
+      web5: {
+        didResolverName: string;
+        didResolverPassword: string;
+        identifier: string;
+      };
+      others: {
+        datePublished: string;
+      };
+    }
+  }
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+ <!-- success/failure result -->
+  {
+      status: number;
+      message: string;
+  }
+
+```
+
+### Deleting Existing User Data (DID) on the DWN
+
+**deleteUser()**
+
+**Description:**
+
+The `deleteUser` function is used remove user data exisitng in their local/remote DWN on the web5 network seamlessly providng the following data.
+
+**Parameters:**
+
+```
+  recordId: string
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+ <!-- success/failure result -->
+  {
+      status: number;
+      message: string;
+  }
+```
+
+### Get Single User Data (DID) on the DWN
+
+**getSingleUser()**
+
+**Description:**
+
+The `getSingleUser` function is used get a user data exisitng in their local/remote DWN on the web5 network seamlessly providng the following data.
+
+**Parameters:**
+
+```
+recordId: string
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```
+  {
+      status: number,
+      message: string,
+      userData: {
+    '@context': string,
+    '@type': string,
+    personalDetails: {
+      firstname: string,
+      lastname: string,
+      phone: string,
+      email: string,
+      photo: string,
+      dateOfBirth: string,
+      gender: string,
+    },
+    web5: {
+      didResolverName: string,
+      identifier: string
+    },
+    others: {
+      datePublished: string
+    }
+  },
+    }
+```
+
+**Status:**
+
+The status of the responses. Possible values are:
+
+- 200 - request successfull.
+- 201 - request created.
+- 405 - failed request.
+- 409 - Conflicting request (exising data and refuse to duplicate)
+- 500 - Internal Server Error
+
+## Technologies Used
+
+This project uses the following technologies:
+
+- 🎉 Firebase - A platform that provides various backend services such as authentication, database, storage, etc.
+- 🎉 React Query - A library for fetching, caching, and updating data in React applications.
+- 🎉 Web5 - A web technology that allow users more autnonomy over their data.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contributors
+
+Web5 Hackathon Team
+[Obadaki Emmanuel](https://github.com/todak2000)
+[David Grace](https://github.com/todak2000)
+[Oludiya Daniel](https://github.com/todak2000)
+[Olagunju Daniel ](https://github.com/todak2000)
