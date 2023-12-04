@@ -31,6 +31,7 @@ export interface IYarnSchemaProps {
   isReyarn: boolean; // is a reyarn
   reyarnCount?: string;
   likes?: string[];
+  username?: string;
   parentYarnRecordId?: string;
 }
 

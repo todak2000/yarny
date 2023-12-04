@@ -28,6 +28,7 @@ const ConstructYarn = async (data: IYarnSchemaProps) => {
     },
     web5: {
       identifier: await yarn.createDID(), //userDid
+      username:data.username,
     },
     others: {
       datePublished: date,
