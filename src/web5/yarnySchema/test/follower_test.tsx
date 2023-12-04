@@ -10,7 +10,7 @@ import {
   deleteFollower,
   getFollowers,
   getSingleFollower,
-} from '@/pages/web5/yarnySchema/followers';
+} from '@/web5/yarnySchema/followers';
 
 export default function Web5Page() {
   const today = new Date();

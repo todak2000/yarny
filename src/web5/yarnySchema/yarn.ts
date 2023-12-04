@@ -1,7 +1,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Web5Constructor } from '@/pages/web5/constructor';
+import { Web5Constructor } from '@/web5/constructor';
 
 import { IYarnSchemaProps } from '@/types';
 

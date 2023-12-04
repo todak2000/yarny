@@ -5,11 +5,12 @@ import {
   sendEmailVerification,
   signInWithEmailAndPassword,
   User,
+  signOut
 } from 'firebase/auth';
 
-import { db } from '@/pages/firebase';
-import { auth } from '@/pages/firebase';
-import { createNewUser, getSingleUser } from '@/pages/web5/userSchema';
+import { db } from '@/firebase';
+import { auth } from '@/firebase';
+import { createNewUser, getSingleUser } from '@/web5/userSchema';
 export async function SigninHandler(data: any) {
   try {
     // get the email and password from the request body
@@ -48,12 +49,16 @@ export async function SigninHandler(data: any) {
         fromDWN: res.status === 200 ? res.userData : null,
       };
     } else {
-      return { statusCode: 200, singleItem: { error: 'No such Item exist!' } };
+      return { statusCode: 200, user: { error: 'No such Item exist!' } };
     }
   } catch (error: any) {
+    let errorMessage = 'Oops! an error occured'
+    if(error.message === 'Firebase: Error (auth/invalid-credential).'){
+      errorMessage = 'Email/Password is incorrect'
+    }
     return {
       statusCode: 405,
-      message: error?.message,
+      message: errorMessage
     };
   }
 }
@@ -116,6 +121,27 @@ export async function SignupHandler(data: any) {
     };
   }
 }
+
+export const handleSignOut = async (): Promise<
+  | {
+      statusCode: number;
+      message: string;
+    }
+  | any
+> => {
+  try {
+    const logout = await signOut(auth);
+    return {
+      statusCode: 200,
+      message: "Success!",
+    };
+  } catch (error: any) {
+    return {
+      statusCode: 405,
+      message: error?.message,
+    };
+  }
+};
 
 export async function web5SignUpHandler() {
   try {
