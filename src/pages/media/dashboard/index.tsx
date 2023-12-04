@@ -1,7 +1,7 @@
 // pages/index.tsx
 import React from 'react';
 import { NextPage } from 'next';
-import { MediaLayout } from '../layout';
+import MediaLayout from '../layout';
 import UserBar from '@/pages/components/UserBar';
 import YarnBar from '@/pages/components/YarnBar';
 // Define the props for the page component

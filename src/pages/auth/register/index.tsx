@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from 'react-redux';
 import { SignupHandler } from '@/pages/api/firebase';
 // Define the data type for the signup form values
-import { setUser, clearUser } from '@/pages/store';
+import { setUser, clearUser } from '@/store';
 import BgImage from '@/pages/components/BgImage';
 import Image from 'next/image';
 import { RegisterFormArr } from '@/constant';

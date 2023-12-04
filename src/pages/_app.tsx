@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import store from './store';
+import store from '../store';
 import '@/styles/globals.css';
 import { Provider } from 'react-redux';
 const queryClient = new QueryClient();

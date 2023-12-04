@@ -9,14 +9,15 @@ interface MediaLayoutProps {
   }
 import useImageWidth
  from '@/utils/useImageWidthHook';
-export const MediaLayout: React.FC<MediaLayoutProps> = ({ children, title }) => {
+// export const MediaLayout: React.FC<MediaLayoutProps> = ({ children, title }) => {
+  function MediaLayout({ children, title }: MediaLayoutProps) {
 const {showMobile} = useImageWidth()
   return (
     <Layout>
       <Seo templateTitle={`Yarny Social Media:${title}`} />
       <main className={`w-full flex ${showMobile ? "flex-col": "flex-row"}`}>
         <SideBar />
-        <div  className={`w-[100vw] bg-blue-500`}>
+        <div  className={`w-[100vw]`}>
         {children}
         </div>
       
@@ -24,3 +25,5 @@ const {showMobile} = useImageWidth()
     </Layout>
   );
 }
+
+export default MediaLayout; 

@@ -7,7 +7,7 @@ import Button from "@/components/buttons/Button";
 import { YarnyLogo } from "@/constant";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setUser, clearUser } from "../store";
+import { setUser, clearUser } from "../../store";
 import { MdCreate } from "react-icons/md";
 import { auth } from "../../firebase";
 import { GrPowerShutdown } from "react-icons/gr";

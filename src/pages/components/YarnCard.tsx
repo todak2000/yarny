@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { SlClose } from 'react-icons/sl';
 import { MediaSideBarArr, YarnyLogo, YarnyLogoIcon } from '@/constant';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser, clearUser } from '../store';
+import { setUser, clearUser } from '../../store';
 import { BsPersonCircle } from "react-icons/bs";
 import { FaRetweet } from "react-icons/fa6";
 import { auth } from '../../firebase';
