@@ -7,10 +7,10 @@ import { SlClose } from 'react-icons/sl';
 import { MediaSideBarArr, YarnyLogo, YarnyLogoIcon } from '@/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, clearUser } from '../store';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import useImageWidth from '@/utils/useImageWidthHook';
-import { CgProfile } from "react-icons/cg";
+import { MdPersonPin } from "react-icons/md";
 const UserBar: React.FC = () => {
   const { push, pathname } = useRouter();
   const dispatch = useDispatch();
@@ -19,35 +19,30 @@ const UserBar: React.FC = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [showSideBar, setShowSideBar] = useState(true);
   const { showMobile, imageWidth } = useImageWidth();
+  const user = useSelector((state: any) => state.user);
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       const userData = {
+  //         name: user.displayName,
+  //         email: user.email,
+  //         photo: user.photoURL,
+  //         uid: user.uid,
+  //       };
+  //       dispatch(setUser(userData as any));
+  //     } else {
+  //       dispatch(clearUser());
+  //       // handleLink('/auth/login');
+  //     }
+  //   });
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        const userData = {
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-          uid: user.uid,
-        };
-        dispatch(setUser(userData as any));
-      } else {
-        dispatch(clearUser());
-        // handleLink('/auth/login');
-      }
-    });
+  //   // Cleanup subscription on unmount
+  //   return () => unsubscribe();
+  // }, []);
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
 
-  const handleClick = () => {
-    setShowDropDown(!showDropDown);
-  };
   const handleLink = (link: string) => {
     push(link);
-  };
-  const toggleSideBar = () => {
-    setShowSideBar(!showSideBar);
   };
 
   return (
@@ -67,14 +62,14 @@ const UserBar: React.FC = () => {
         <div className='flex flex-row items-center justify-end px-6'>
           
           <div>
-          <p className="text-lg text-right font-medium">Daniel Olagunju</p>
-          <p className="text-xs text-right text-gray-600">@adedaaa</p>
+          <p className="text-lg text-right font-medium">{user.name}</p>
+          <p className="text-xs text-right text-gray-600">{user.username}</p>
           </div>
           <div
             className='flex flex-shrink-0 cursor-pointer flex-row ml-4  items-center'
             onClick={() => handleLink('/')}
           >
-            <CgProfile className="text-5xl text-main"/>
+            <MdPersonPin className="text-5xl text-main"/>
           </div>
         </div>
       )}

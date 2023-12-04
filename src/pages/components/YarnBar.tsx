@@ -7,7 +7,7 @@ import { SlClose } from 'react-icons/sl';
 import { MediaSideBarArr, YarnyLogo, YarnyLogoIcon } from '@/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, clearUser } from '../store';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import useImageWidth from '@/utils/useImageWidthHook';
 import { CgProfile } from "react-icons/cg";
@@ -19,40 +19,10 @@ const YarnBar: React.FC = () => {
   const { push, pathname } = useRouter();
   const dispatch = useDispatch();
 
-
-  const [showDropDown, setShowDropDown] = useState(false);
-  const [showSideBar, setShowSideBar] = useState(true);
-  const { showMobile, imageWidth } = useImageWidth();
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        const userData = {
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-          uid: user.uid,
-        };
-        dispatch(setUser(userData as any));
-      } else {
-        dispatch(clearUser());
-        // handleLink('/auth/login');
-      }
-    });
-
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
-
-  const handleClick = () => {
-    setShowDropDown(!showDropDown);
-  };
   const handleLink = (link: string) => {
     push(link);
   };
-  const toggleSideBar = () => {
-    setShowSideBar(!showSideBar);
-  };
+  
 
   return (
     <div className="bg-white p-6 h-[100vh]  w-full">

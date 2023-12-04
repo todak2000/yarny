@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser, clearUser } from '../store';
 import { BsPersonCircle } from "react-icons/bs";
 import { FaRetweet } from "react-icons/fa6";
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { AiFillLike } from "react-icons/ai";
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import useImageWidth from '@/utils/useImageWidthHook';
@@ -19,39 +19,6 @@ const YarnCard: React.FC = () => {
   const { push, pathname } = useRouter();
   const dispatch = useDispatch();
 
-  const [showDropDown, setShowDropDown] = useState(false);
-  const [showSideBar, setShowSideBar] = useState(true);
-  const { showMobile, imageWidth } = useImageWidth();
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        const userData = {
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-          uid: user.uid,
-        };
-        dispatch(setUser(userData as any));
-      } else {
-        dispatch(clearUser());
-        // handleLink('/auth/login');
-      }
-    });
-
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
-
-  const handleClick = () => {
-    setShowDropDown(!showDropDown);
-  };
-  const handleLink = (link: string) => {
-    push(link);
-  };
-  const toggleSideBar = () => {
-    setShowSideBar(!showSideBar);
-  };
 
   return (
     <div className='rounded-lg border border-[#D9D9D9] p-3 mt-6'>

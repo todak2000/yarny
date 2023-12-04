@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setUser, clearUser } from "../store";
 import { MdCreate } from "react-icons/md";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { GrPowerShutdown } from "react-icons/gr";
 import { CgProfile } from "react-icons/cg";
-
+import { handleSignOut } from "../api/firebase";
 import Swal from "sweetalert2";
 
 const Header: React.FC = () => {
@@ -23,25 +23,25 @@ const Header: React.FC = () => {
 
   const [showDropDown, setShowDropDown] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        const userData = {
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-          uid: user.uid,
-        };
-        dispatch(setUser(userData as any));
-      } else {
-        dispatch(clearUser());
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       const userData = {
+  //         name: user.displayName,
+  //         email: user.email,
+  //         photo: user.photoURL,
+  //         uid: user.uid,
+  //       };
+  //       dispatch(setUser(userData as any));
+  //     } else {
+  //       dispatch(clearUser());
 
-      }
-    });
+  //     }
+  //   });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
+  //   // Cleanup subscription on unmount
+  //   return () => unsubscribe();
+  // }, []);
 
   const handleClick = () => {
     setShowDropDown(!showDropDown);
@@ -50,28 +50,28 @@ const Header: React.FC = () => {
     push(link);
   };
 
-  // const handleOut = () => {
-  //   Swal.fire({
-  //     title: "Are you sure you want to signout?",
-  //     showDenyButton: true,
-  //     confirmButtonText: "Yes",
-  //     denyButtonText: `No`,
-  //   }).then(async (result) => {
-  //     if (result.isConfirmed) {
-  //       const out: any = await handleSignOut();
-  //       if (out.statusCode === 200) {
-  //         dispatch(clearUser());
-  //         Swal.fire({
-  //           title: "Success!",
-  //           text: "Logout successfully!",
-  //           icon: "success",
-  //         });
-  //       } else {
-  //         Swal.fire("Oops an error occured", "", "info");
-  //       }
-  //     }
-  //   });
-  // };
+  const handleOut = () => {
+    Swal.fire({
+      title: "Are you sure you want to signout?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: `No`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const out: any = await handleSignOut();
+        if (out.statusCode === 200) {
+          dispatch(clearUser());
+          Swal.fire({
+            title: "Success!",
+            text: "Logout successfully!",
+            icon: "success",
+          });
+        } else {
+          Swal.fire("Oops an error occured", "", "info");
+        }
+      }
+    });
+  };
 
   return (
     <div className="bg-transparent  flex w-full flex-row items-center justify-between px-4 py-[40px]  md:px-[120px]">

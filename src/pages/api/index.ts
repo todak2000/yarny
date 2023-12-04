@@ -4,14 +4,14 @@ import {
   getSingleUser,
   getUsers,
   updateUser,
-} from '@/pages/web5/userSchema';
+} from '@/web5/userSchema';
 import {
   createNewFollower,
   deleteFollower,
   getFollowers,
   getSingleFollower,
-} from '@/pages/web5/yarnySchema/followers';
-import { getUserMessages, sendMessage } from '@/pages/web5/yarnySchema/message';
+} from '@/web5/yarnySchema/followers';
+import { getUserMessages, sendMessage } from '@/web5/yarnySchema/message';
 import {
   createNewYarn,
   deleteYarn,
@@ -21,7 +21,7 @@ import {
   searchYarn,
   toggleLikeYarn,
   updateYarn,
-} from '@/pages/web5/yarnySchema/yarn';
+} from '@/web5/yarnySchema/yarn';
 // web5 user CRUD apis
 export {
   createNewFollower,

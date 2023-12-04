@@ -7,7 +7,7 @@ import { SlClose } from 'react-icons/sl';
 import { MediaSideBarArr, YarnyLogo, YarnyLogoIcon } from '@/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, clearUser } from '../store';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import Swal from "sweetalert2";
 import { handleSignOut } from '../api/firebase';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
@@ -45,25 +45,25 @@ const SideBar: React.FC = () => {
       }
     });
   };
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        const userData = {
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-          uid: user.uid,
-        };
-        dispatch(setUser(userData as any));
-      } else {
-        dispatch(clearUser());
-        // handleLink('/auth/login');
-      }
-    });
+//   useEffect(() => {
+//     const unsubscribe = auth.onAuthStateChanged((user) => {
+//       if (user) {
+//         const userData = {
+//           name: user.displayName,
+//           email: user.email,
+//           photo: user.photoURL,
+//           uid: user.uid,
+//         };
+//         dispatch(setUser(userData as any));
+//       } else {
+//         dispatch(clearUser());
+//         // handleLink('/auth/login');
+//       }
+//     });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
+//     // Cleanup subscription on unmount
+//     return () => unsubscribe();
+//   }, []);
 
   const handleClick = () => {
     setShowDropDown(!showDropDown);
@@ -91,11 +91,11 @@ const SideBar: React.FC = () => {
           {showDropDown ? (
             <SlClose
               onClick={handleClick}
-              className='flex text-lg text-green-900 md:hidden'
+              className='flex text-lg text-green-900 md:hidden cursor-pointer'
             />
           ) : (
             <RxHamburgerMenu
-              className='flex text-lg text-green-900 md:hidden'
+              className='flex text-lg text-green-900 md:hidden cursor-pointer'
               onClick={handleClick}
             />
           )}
@@ -142,7 +142,7 @@ const SideBar: React.FC = () => {
             return (
               <p
                 key={id}
-                onClick={() => { text === "Logout" ? handleOut:
+                onClick={() => { text === "Logout" ? handleOut():
                   handleLink(redirect);
                 }}
                 className='mx-4 flex cursor-pointer flex-row items-center rounded-lg py-3 px-2 text-sm font-thin text-main hover:bg-main hover:font-medium hover:text-secondary'

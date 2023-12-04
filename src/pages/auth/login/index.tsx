@@ -84,17 +84,26 @@ const Signin: NextPage = () => {
 
       <div className='absolute top-0 grid h-[100vh] w-full grid-cols-1 sm:grid-cols-2'>
         <div className=' flex w-full flex-col items-center justify-center px-4 py-6'>
-          {user.uid ? 
+          {user.username ? 
+          <>
+          <p className="text-main text-lg font-primary">Welcome {user?.username}</p>
           <div className="flex flex-row">
-            <button onClick={()=>push('/media/dashboard')}  className='border border-1 rounded-lg hover:bg-main border-main h-[100px] w-[100px] mr-2 hover:text-white text-xs flex flex-col  justify-center items-center'>
-            <Image  className="mb-2" src={YarnyLogoBlackIcon} alt='yarny logo' width={17} height={17} />
+            <button onClick={()=>{
+                setLoading(true)
+                push('/media/dashboard')
+            }}  className='border border-1 rounded-lg hover:bg-main border-main h-[100px] w-[100px] mr-2 hover:text-white text-xs flex flex-col  justify-center items-center'>
+            {loading ? <Loader />:<Image  className="mb-2" src={YarnyLogoBlackIcon} alt='yarny logo' width={17} height={17} />}
                 Social Media
             </button>
-            <button onClick={()=>push('/wallet/dashboard')} className='border border-1 rounded-lg hover:bg-secondary border-secondary h-[100px] w-[100px] ml-2 text-xs flex flex-col  justify-center items-center'>
-            <IoWalletOutline className="text-3xl text-black mb-2"/>
+            <button onClick={()=>{
+                setLoading(true)
+                push('/wallet/dashboard')
+            }} className='border border-1 rounded-lg hover:bg-secondary border-secondary h-[100px] w-[100px] ml-2 text-xs flex flex-col  justify-center items-center'>
+            {loading ? <Loader />:<IoWalletOutline className="text-3xl text-black mb-2"/>}
                 Web 5 wallet
                 </button>
           </div>
+          </>
           :
           <>
           <Image onClick={()=>push('/')} src={YarnyLogo} alt='yarny logo' width={100} height={100} />

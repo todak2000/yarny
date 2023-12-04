@@ -8,9 +8,9 @@ import {
   signOut
 } from 'firebase/auth';
 
-import { db } from '@/pages/firebase';
-import { auth } from '@/pages/firebase';
-import { createNewUser, getSingleUser } from '@/pages/web5/userSchema';
+import { db } from '@/firebase';
+import { auth } from '@/firebase';
+import { createNewUser, getSingleUser } from '@/web5/userSchema';
 export async function SigninHandler(data: any) {
   try {
     // get the email and password from the request body
