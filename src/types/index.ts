@@ -50,3 +50,22 @@ export interface IMessageSchemaProps {
     isRead: boolean;
   };
 }
+
+export interface ISignupValues {
+  email: string;
+  password: string;
+  firstname?: string;
+  lastname?: string;
+  username?: string;
+}
+
+export interface IInitialValues {
+  name: string;
+  email: string;
+  userDid: string;
+  userRecordId: string;
+  uid: string;
+  isVerified: string;
+  username: string;
+  web5DBData: any;
+}
