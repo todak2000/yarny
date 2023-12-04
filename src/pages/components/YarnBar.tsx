@@ -14,6 +14,7 @@ import { CgProfile } from "react-icons/cg";
 import { TfiWrite } from "react-icons/tfi";
 import { IoMdNotifications } from "react-icons/io";
 import YarnCard from './YarnCard';
+import { getYarns } from '../api';
 
 const YarnBar: React.FC = () => {
   const { push, pathname } = useRouter();
@@ -22,13 +23,17 @@ const YarnBar: React.FC = () => {
   const handleLink = (link: string) => {
     push(link);
   };
-  
+ 
+  const allYarns = async () => {
+    getYarns().then((users) => console.log(users, 'yarn record'));
+  };
+
 
   return (
     <div className="bg-white p-6 h-[100vh]  w-full">
       <div className='flex flex-row border-b border-[#D9D9D9] py-4'>
         <p className="text-sm mr-4 flex flex-row items-center text-[#232323]">Yarn wetin dey your mind <TfiWrite className="ml-2"/></p>
-        <p className="text-sm flex flex-row items-center">Notification <IoMdNotifications  className="ml-2"/></p>
+        <p onClick={allYarns} className="text-sm flex flex-row items-center">Notification <IoMdNotifications  className="ml-2"/></p>
       </div>
       <div className="overflow-y-auto py-6 h-[90vh]">
       <YarnCard />
