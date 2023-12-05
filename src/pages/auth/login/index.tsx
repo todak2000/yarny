@@ -31,6 +31,7 @@ const SigninSchema = Yup.object().shape({
 const Signin: NextPage = () => {
     const { push } = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const [loading2, setLoading2] = useState<boolean>(false);
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const {showMobile} = useImageWidth()
   const dispatch = useDispatch();
@@ -88,18 +89,18 @@ const Signin: NextPage = () => {
           <>
           <p className="text-main text-lg font-primary">Welcome {user?.username}</p>
           <div className="flex flex-row">
-            <button onClick={()=>{
+            <button disabled={loading2} onClick={()=>{
                 setLoading(true)
                 push('/media/dashboard')
             }}  className='border border-1 rounded-lg hover:bg-main border-main h-[100px] w-[100px] mr-2 hover:text-white text-xs flex flex-col  justify-center items-center'>
             {loading ? <Loader />:<Image  className="mb-2" src={YarnyLogoBlackIcon} alt='yarny logo' width={17} height={17} />}
                 Social Media
             </button>
-            <button onClick={()=>{
-                setLoading(true)
+            <button disabled={loading} onClick={()=>{
+                setLoading2(true)
                 push('/wallet/dashboard')
             }} className='border border-1 rounded-lg hover:bg-secondary border-secondary h-[100px] w-[100px] ml-2 text-xs flex flex-col  justify-center items-center'>
-            {loading ? <Loader />:<IoWalletOutline className="text-3xl text-black mb-2"/>}
+            {loading2 ? <Loader />:<IoWalletOutline className="text-3xl text-black mb-2"/>}
                 Web 5 wallet
                 </button>
           </div>

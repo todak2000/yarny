@@ -75,7 +75,7 @@ export class Web5Constructor {
           schema: this.uri,
         },
       },
-      dateSort: 'createdAscending',
+      dateSort: 'createdDescending',
     } as RecordsQueryRequest);
     return records;
   }

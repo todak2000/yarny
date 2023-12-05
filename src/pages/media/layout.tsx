@@ -15,7 +15,7 @@ const {showMobile} = useImageWidth()
   return (
     <Layout>
       <Seo templateTitle={`Yarny Social Media:${title}`} />
-      <main className={`w-full flex ${showMobile ? "flex-col": "flex-row"}`}>
+      <main className={`w-full flex ${showMobile ? "flex-col": "flex-row"} h-[100vh]`}>
         <SideBar />
         <div  className={`w-[100vw]`}>
         {children}

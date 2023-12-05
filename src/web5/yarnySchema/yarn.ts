@@ -38,20 +38,28 @@ const ConstructYarn = async (data: IYarnSchemaProps) => {
 };
 
 // Get All yarns
+
 export const getYarns = async (): Promise<any> => {
   try {
     const data = await yarn.getData();
     const yarns: any[] = [];
+    
     if (data) {
       data.map(async (d: any) => {
         const y = await d.data.json();
         y.recordId = d._recordId;
-        yarns.push(y);
+        yarns.push( {
+          name: y?.web5?.username || 'username',
+          text: y?.yarnDetails?.text,
+          likes: y?.yarnDetails?.likes?.length,
+          recordId:y?.recordId,
+          reyarn : y?.yarnDetails?.reyarnCount
+        });
       });
       return {
         status: 200,
         message: 'All Yarn data retrieved successfully',
-        yarnData: yarns,
+        yarnData: yarns
       };
     }
   } catch (error) {
