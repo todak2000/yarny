@@ -101,7 +101,7 @@ const YarnBar: React.FC = () => {
         )}
         {!loading && (
           <div>
-            {yarnData?.yarnData.length > 0 ? (
+            {yarnData?.yarnData.length < 0 ? (
               <div className='flex w-full flex-col items-center justify-center text-center'>
                 <Image
                   src={emptyYarnImage}
