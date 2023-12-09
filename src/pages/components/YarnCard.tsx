@@ -58,7 +58,7 @@ function YarnCard({name, setRefresh, comments, text, likes, reyarn, recordId, is
 
   const likeYarnData = async () => {
     toggleLikeYarn (recordId, user.userRecordId).then((userr: any) =>{
-      if (localLikes.includes(user?.userRecordId as string)){
+      if (localLikes?.includes(user?.userRecordId as string)){
         setLocalLikes(localLikes.filter(string=> string !==user?.userRecordId))
       }
       else{
@@ -90,7 +90,7 @@ function YarnCard({name, setRefresh, comments, text, likes, reyarn, recordId, is
       
 
       <div className='flex flex-col items-center justify-center '>
-      <p className='text-right text-xs font-normal flex flex-row items-center'> <AiFillLike onClick={likeYarnData} className={`${localLikes.includes(user?.userRecordId) ? 'text-red-700':'text-gray-700'} text-xl  mr-1 cursor-pointer`} />  {localLikes ? localLikes?.length : 0}</p>
+      <p className='text-right text-xs font-normal flex flex-row items-center'> <AiFillLike onClick={likeYarnData} className={`${localLikes?.includes(user?.userRecordId) ? 'text-red-700':'text-gray-700'} text-xl  mr-1 cursor-pointer`} />  {localLikes ? localLikes?.length : 0}</p>
           <p className='text-right text-xs font-normal flex flex-row items-center'> <FaRetweet  onClick={isReyarn ? ()=>null : reYarn} className={`${isReyarn ? 'text-main':'text-gray-100'} text-xl  mr-1 cursor-pointer`}  /> {reyarn ? reyarn?.length : 0}</p>
           <p className='text-right text-xs font-normal flex flex-row items-center'> <BiSolidCommentDetail  onClick={()=>setShow(!show)} className="text-gray-100 text-xl  mr-1 cursor-pointer" /> {comments ? comments?.length : 0}</p>
         

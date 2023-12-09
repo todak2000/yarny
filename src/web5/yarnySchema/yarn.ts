@@ -322,8 +322,8 @@ export const toggleLikeYarn = async (
 
   let likesArr = likeData.yarnDetails.likes;
 
-  likesArr = likesArr.includes(userRecordId)
-    ? likesArr.filter((like: string) => like !== userRecordId)
+  likesArr = likesArr?.includes(userRecordId)
+    ? likesArr?.filter((like: string) => like !== userRecordId)
     : [...likesArr, userRecordId];
 
   likeData.yarnDetails.likes = likesArr;
