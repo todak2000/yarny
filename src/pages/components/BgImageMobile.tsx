@@ -1,6 +1,8 @@
-import React from "react";
-import { MobileHeroBg } from "@/constant";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
+import React from "react";
+
+import { MobileHeroBg } from "@/constant";
 
 const BgImageMobile: React.FC = () => {
   const [imageWidth, setImageWidth] = React.useState<any>(780);

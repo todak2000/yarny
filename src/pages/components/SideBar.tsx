@@ -1,26 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { SlClose } from 'react-icons/sl';
-import { MediaSideBarArr, YarnyLogo, YarnyLogoIcon } from '@/constant';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser, clearUser } from '../../store';
-import { auth } from '../../firebase';
-import Swal from "sweetalert2";
-import { handleSignOut } from '../api/firebase';
+import { useRouter } from 'next/router';
+import React, {useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import useImageWidth from '@/utils/useImageWidthHook';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { SlClose } from 'react-icons/sl';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from "sweetalert2";
+
+import { MediaSideBarArr, YarnyLogo, YarnyLogoIcon } from '@/constant';
 import { Avatar } from '@/constant';
+import useImageWidth from '@/utils/useImageWidthHook';
+
+import { handleSignOut } from '../api/firebase';
+import { clearUser } from '../../store';
 const SideBar: React.FC = () => {
-  const { push, pathname } = useRouter();
+  const { push } = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
 
   const [showDropDown, setShowDropDown] = useState(false);
   const [showSideBar, setShowSideBar] = useState(true);
-  const { showMobile, imageWidth } = useImageWidth();
+  const { showMobile } = useImageWidth();
 
   const handleOut = () => {
     Swal.fire({
@@ -45,25 +47,6 @@ const SideBar: React.FC = () => {
       }
     });
   };
-//   useEffect(() => {
-//     const unsubscribe = auth.onAuthStateChanged((user) => {
-//       if (user) {
-//         const userData = {
-//           name: user.displayName,
-//           email: user.email,
-//           photo: user.photoURL,
-//           uid: user.uid,
-//         };
-//         dispatch(setUser(userData as any));
-//       } else {
-//         dispatch(clearUser());
-//         // handleLink('/auth/login');
-//       }
-//     });
-
-//     // Cleanup subscription on unmount
-//     return () => unsubscribe();
-//   }, []);
 
   const handleClick = () => {
     setShowDropDown(!showDropDown);
@@ -152,10 +135,11 @@ const SideBar: React.FC = () => {
             return (
               <p
                 key={id}
-                onClick={() => { text === "Logout" ? handleOut():
-                  handleLink(redirect);
+                onClick={() => { text === "Logout" ? handleOut(): text=== 'Home'?
+                  handleLink(redirect): null;
                 }}
-                className='mx-4 flex cursor-pointer flex-row items-center rounded-lg py-3 px-3 text-sm font-thin text-main md:text-white hover:bg-main '
+                className={`${text !== "Logout" && text !== 'Home'?
+                'text-gray-500': 'text-main md:text-white hover:bg-main'} mx-4 flex cursor-pointer flex-row items-center rounded-lg py-3 px-3 text-sm font-thin `}
               >
                 {icon}
                 {

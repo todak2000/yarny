@@ -1,9 +1,11 @@
 // pages/index.tsx
-import React from 'react';
 import { NextPage } from 'next';
-import MediaLayout from '../layout';
+import React from 'react';
+
 import UserBar from '@/pages/components/UserBar';
 import YarnBar from '@/pages/components/YarnBar';
+
+import MediaLayout from '../layout';
 
 const Home: NextPage = () => {
   return (

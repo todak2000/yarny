@@ -11,8 +11,6 @@ const today = new Date();
 const date = today.toJSON().slice(0, 10).replace(/-/g, '/');
 
 const ConstructYarn = async (data: IYarnSchemaProps) => {
-  // recordId: string,
-  // userRecordId: string
   return {
     '@context': yarn.context,
     '@type': yarn.type,
@@ -21,9 +19,9 @@ const ConstructYarn = async (data: IYarnSchemaProps) => {
       viewCount: data.viewCount ? data.viewCount : 0,
       isComment: data.isComment ? data.isComment : false, //is yarn as a comment
       ownerId: await yarn.createDID(),
-      reyarn:data.isReyarn ? (await updateReYarn(data.parentYarnRecordId as string,data.userRecordId as string)).reyarn : (await getReYarn(data.parentYarnRecordId as string)).reyarn,
+      reyarn:data.isReyarn ? (await updateReYarn(data.parentYarnRecordId as string,data.userRecordId as string))?.reyarn : (await getReYarn(data.parentYarnRecordId as string)).reyarn,
       isReyarn: data.isReyarn ? data.isReyarn : false, // is a reyarn
-      // reyarnCount: data.isReyarn ? data.reyarnCount : 0,
+      comments: data.isComment ? [] : data?.comments,
       likes: data.likes ? data.likes : [], // array of userDids
       parentYarnRecordId: data.parentYarnRecordId
         ? data.parentYarnRecordId
@@ -56,6 +54,7 @@ export const getYarns = async (): Promise<any> => {
           text: y?.yarnDetails?.text,
           likes: y?.yarnDetails?.likes ? y?.yarnDetails?.likes : [],
           recordId:y?.recordId,
+          comments: y?.yarnDetails?.comments,
           isComment: y?.yarnDetails?.isComment,
           parentYarnRecordId: y?.yarnDetails?.isReyarn || y?.yarnDetails?.isComment ? y?.yarnDetails?.parentYarnRecordId : null,
           isReyarn:y?.yarnDetails?.isReyarn ? y?.yarnDetails?.isReyarn : false,
@@ -134,6 +133,7 @@ export const createNewYarn = async (
 ): Promise<any> => {
   const records = await yarn.getData();
 
+  
   let isExisting = false;
 
   const promises = records.map((record: any) => record.data.json());
@@ -353,6 +353,57 @@ export const toggleLikeYarn = async (
   }
 };
 
+
+// Toggle Like/Dislike a Yarn
+export const createComment = async (
+  newData: IYarnSchemaProps
+) => {
+  const web5 = await yarn.web5();
+
+  const { records } = await web5.dwn.records.query({
+    message: {
+      filter: {
+        recordId: newData.parentYarnRecordId,
+      },
+    },
+  });
+
+  const commentData = await records[0]?.data?.json();
+
+  let commentArr = commentData?.yarnDetails?.comments ? commentData?.yarnDetails?.comments : [];
+
+  commentArr =  [...commentArr, newData];
+
+  commentData.yarnDetails.comments = commentArr;
+  const copyData = { ...commentData };
+  const nData = {
+    text: copyData.yarnDetails.text,
+    viewCount: copyData.yarnDetails.viewCount,
+    isComment: copyData.yarnDetails.isComment, //is yarn as a comment
+    ownerId: copyData.yarnDetails.ownerId,
+    comments: copyData.yarnDetails.comments,
+    isReyarn: copyData.yarnDetails.isReyarn, // is a reyarn
+    reyarnCount: copyData.yarnDetails.reyarnCount,
+    likes: copyData.yarnDetails.likes,
+    parentYarnRecordId: copyData.yarnDetails.parentYarnRecordId,
+  };
+  const { status, record } = await records[0].update({
+    data: await ConstructYarn(nData),
+  });
+console.log(status,record, 'create comment------')
+  if (status.code === 202) {
+    return {
+      status: 200,
+      data: copyData,
+      message: 'Comment  Data added Successfully on Web5',
+    };
+  } else {
+    return { status: status.code, message: 'Oops! an error occurred' };
+  }
+};
+
+
+
 // Search for Yarn terms
 export const searchYarn = async (queryString = '', parameter = 'yarns') => {
   const web5 = await yarn.web5();
@@ -371,38 +422,4 @@ export const searchYarn = async (queryString = '', parameter = 'yarns') => {
     },
   });
 
-  console.log(records, 'search records');
-  // const likeData = await records[0]?.data?.json();
-
-  // let likesArr = likeData.yarnDetails.likes;
-
-  // likesArr = likesArr.includes(userRecordId)
-  //   ? likesArr.filter((like: string) => like !== userRecordId)
-  //   : [...likesArr, userRecordId];
-
-  // likeData.yarnDetails.likes = likesArr;
-  // const copyData = { ...likeData };
-  // const nData = {
-  //   text: copyData.yarnDetails.text,
-  //   viewCount: copyData.yarnDetails.viewCount,
-  //   isComment: copyData.yarnDetails.isComment, //is yarn as a comment
-  //   ownerId: copyData.yarnDetails.ownerId,
-  //   isReyarn: copyData.yarnDetails.isReyarn, // is a reyarn
-  //   reyarnCount: copyData.yarnDetails.reyarnCount,
-  //   likes: copyData.yarnDetails.likes,
-  //   parentYarnRecordId: copyData.yarnDetails.parentYarnRecordId,
-  // };
-  // const { status } = await records[0].update({
-  //   data: await ConstructYarn(nData),
-  // });
-
-  // if (status.code === 202) {
-  //   return {
-  //     status: 200,
-  //     data: copyData,
-  //     message: 'Yarn Data updated Successfully on Web5',
-  //   };
-  // } else {
-  //   return { status: status.code, message: 'Oops! an error occurred' };
-  // }
 };

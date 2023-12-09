@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
 import { useRouter } from "next/router";
+import React from "react";
 const Hero: React.FC = () => {
-  const { push, pathname } = useRouter();
+  const { push } = useRouter();
   const handleLink = (link: string) => {
     push(link);
   };

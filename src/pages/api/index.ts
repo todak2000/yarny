@@ -13,6 +13,7 @@ import {
 } from '@/web5/yarnySchema/followers';
 import { getUserMessages, sendMessage } from '@/web5/yarnySchema/message';
 import {
+  createComment,
   createNewYarn,
   deleteYarn,
   getAllYarnComments,
@@ -20,10 +21,10 @@ import {
   getYarns,
   searchYarn,
   toggleLikeYarn,
-  updateYarn,
-} from '@/web5/yarnySchema/yarn';
+  updateYarn} from '@/web5/yarnySchema/yarn';
 // web5 user CRUD apis
 export {
+  createComment,
   createNewFollower,
   createNewUser,
   createNewYarn,

@@ -1,11 +1,12 @@
+/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { doc, getDoc, setDoc } from '@firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithEmailAndPassword,
-  User,
   signOut,
+  User,
 } from 'firebase/auth';
 
 import { db } from '@/firebase';
@@ -14,8 +15,6 @@ import { createNewUser, getSingleUser } from '@/web5/userSchema';
 
 export async function authCheck() {
   try {
-    // get the email and password from the request body
-
     let singleItem;
     const authh = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -65,10 +64,8 @@ export async function authCheck() {
 
 export async function SigninHandler(data: any) {
   try {
-    // get the email and password from the request body
     const { email, password } = data;
     let singleItem;
-    // sign in the user with the email and password using Firebase auth
     const userCredentials = await signInWithEmailAndPassword(
       auth,
       email,
@@ -117,10 +114,9 @@ export async function SigninHandler(data: any) {
 
 export async function SignupHandler(data: any) {
   try {
-    // get the email and password from the request body
+
     const { email, password, firstname, lastname, username } = data;
 
-    // sign in the user with the email and password using Firebase auth
     const userCredentials = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -197,9 +193,7 @@ export const handleSignOut = async (): Promise<
 
 export async function web5SignUpHandler() {
   try {
-    // get the email and password from the request body
     if (auth.currentUser) {
-      // console.log(auth.currentUser, "curren");
       const singleItemRef = doc(db, 'Users', auth.currentUser.uid);
 
       const querySnapshot = await getDoc(singleItemRef);
@@ -242,7 +236,6 @@ export async function web5SignUpHandler() {
         };
       }
     } else {
-      // add an else clause to handle the case when the user is not logged in
       return {
         statusCode: 401,
         message: 'You need to log in to use this feature.',

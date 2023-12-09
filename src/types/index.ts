@@ -32,6 +32,7 @@ export interface IYarnSchemaProps {
   likes?: string[];
   reyarn?: string[];
   username?: string;
+  comments?: any[];
   parentYarnRecordId?: string;
   userRecordId?: string;
 }

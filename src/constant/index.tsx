@@ -1,17 +1,17 @@
-import { IInitialValues } from '@/types';
-import { v4 as uuidV4 } from 'uuid';
-import { TbBrandGoogleHome } from 'react-icons/tb';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 import { BsPersonBoundingBox } from 'react-icons/bs';
-import { SiGoogleanalytics } from 'react-icons/si';
-import { RiSettingsLine } from 'react-icons/ri';
 import { CiLogout } from 'react-icons/ci';
+import { RiSettingsLine } from 'react-icons/ri';
+import { SiGoogleanalytics } from 'react-icons/si';
+import { TbBrandGoogleHome } from 'react-icons/tb';
+import { v4 as uuidV4 } from 'uuid';
+
+import { IInitialValues } from '@/types';
 export const YarnyLogo = '/svg/logoText.svg';
 export const YarnyLogoIcon = '/svg/logo.svg';
 export const YarnyLogoBlackIcon = '/svg/logoblack.svg';
 export const HeroBg = '/images/hero_bgg.png';
 export const MobileHeroBg = '/images/mobile_bg.png';
-export const emptyYarnImage = '/svg/empty-54.svg';
 export const Avatar = '/svg/avatar.svg';
 export const initialUser: IInitialValues = {
   name: '',

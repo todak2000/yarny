@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Image from "next/image";
 import React from "react";
 
 import { HeroBg } from "@/constant";
-import Image from "next/image";
 const BgImage: React.FC = () => {
   const [imageWidth, setImageWidth] = React.useState<any>(1280);
   React.useEffect(() => {

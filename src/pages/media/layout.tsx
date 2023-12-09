@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
+
 import SideBar from '@/pages/components/SideBar';
 interface MediaLayoutProps {
     children: React.ReactNode;
@@ -17,7 +18,7 @@ const {showMobile} = useImageWidth()
       <Seo templateTitle={`Yarny Social Media:${title}`} />
       <main className={`w-full flex ${showMobile ? "flex-col": "flex-row"} h-[100vh]`}>
         <SideBar />
-        <div  className={`w-[100vw]`}>
+        <div  className="w-[100vw]">
         {children}
         </div>
       

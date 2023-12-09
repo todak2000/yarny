@@ -1,17 +1,36 @@
-import { useQuery } from "react-query";
-import { getYarns } from "@/pages/api";
-// Define the query key and the query function for the yarns data
+import { useQuery, useMutation } from "react-query";
+import { createNewYarn, getYarns } from "@/pages/api";
 
 export const useGetDashboardYarnData = () => {
-    return useQuery("dashboardYarns", async () => {
+  return useQuery({
+    queryKey: ["dashboardYarns"],
+    queryFn: async () => {
       try {
-        const result = await getYarns();
-        return result;
-      } catch (error) {
-        console.error(error);
-        return [];
-      }
-    });
+                const result = await getYarns();
+                return result;
+              } catch (error) {
+                console.error(error);
+                return [];
+              }
+    },
+  });
+};
+
+
+export const useCreateYarn = () => {
+  const mutation = useMutation({
+    mutationFn: (data: any) =>
+    createNewYarn(data)
+  });
+
+  const { mutate, data, isError, isLoading, isSuccess, error } = mutation;
+
+  return {
+    createNewYarn: (data: any) => mutate(data),
+    isError,
+    isLoading,
+    isSuccess,
+    error,
+    data,
   };
-  
- 
+};

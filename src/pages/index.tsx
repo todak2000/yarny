@@ -2,14 +2,13 @@ import * as React from 'react';
 
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
-import Header from './components/Header';
-import Hero from './components/Hero';
+
+import useImageWidth from '@/utils/useImageWidthHook';
+
 import BgImage from './components/BgImage';
 import BgImageMobile from './components/BgImageMobile';
-import useImageWidth from '@/utils/useImageWidthHook';
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+import Header from './components/Header';
+import Hero from './components/Hero';
 
 export default function HomePage() {
   const {showMobile} = useImageWidth();

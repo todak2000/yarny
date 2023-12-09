@@ -28,7 +28,6 @@ export default function Web5Page() {
   };
 
   const handleSignin = async () => {
-    // setLoading(true);
     const data = { email: 'test@test.com', password: 'password' };
     const auth = await SigninHandler(data);
     if (auth.statusCode === 200) {

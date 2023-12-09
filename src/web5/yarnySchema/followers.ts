@@ -123,32 +123,6 @@ export const createNewFollower = async (
   }
 };
 
-//Update Follower Data
-// export const updateFollower = async (
-//   recordId: string,
-//   updateData: IFollowerSchemaProps
-// ) => {
-//   const web5 = await follower.web5();
-//   const { record } = await web5.dwn.records.read({
-//     message: {
-//       filter: {
-//         recordId: recordId,
-//       },
-//     },
-//   });
-//   const { status } = await record.update({
-//     data: await ConstructFollower(updateData),
-//   });
-
-//   if (status.code === 202) {
-//     return {
-//       status: 200,
-//       message: 'Follower Data updated Successfully on Web5',
-//     };
-//   } else {
-//     return { status: status.code, message: 'Oops! an error occurred' };
-//   }
-// };
 
 export const isDataExistingByRecordId = async (
   id: string

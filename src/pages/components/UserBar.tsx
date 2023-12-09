@@ -1,28 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { useRouter } from 'next/router';
+import { doc, getDoc } from '@firebase/firestore';
 import Image from 'next/image';
-import { SlClose } from 'react-icons/sl';
-import { doc, getDoc, setDoc } from '@firebase/firestore';
-import { MediaSideBarArr, YarnyLogo, YarnyLogoIcon } from '@/constant';
+import { useRouter } from 'next/router';
+import React, { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser, clearUser } from '../../store';
-import { auth, db  } from '../../firebase';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import useImageWidth from '@/utils/useImageWidthHook';
-import { MdPersonPin } from "react-icons/md";
-import { authCheck } from '../api/firebase';
-import { getSingleUser } from '../api';
+
 import { Avatar } from '@/constant';
+import useImageWidth from '@/utils/useImageWidthHook';
+
+import { getSingleUser } from '../api';
+import { auth, db  } from '../../firebase';
+import { clearUser,setUser } from '../../store';
 const UserBar: React.FC = () => {
-  const { push, pathname } = useRouter();
+  const { push } = useRouter();
   const dispatch = useDispatch();
 
-
-  const [showDropDown, setShowDropDown] = useState(false);
   const [showSideBar, setShowSideBar] = useState(true);
-  const { showMobile, imageWidth } = useImageWidth();
+  const { showMobile } = useImageWidth();
   const user = useSelector((state: any) => state.user);
   useEffect(() => {
 
@@ -56,8 +51,6 @@ const UserBar: React.FC = () => {
         push('/auth/login')
       }
     })
-    
-    // // Cleanup subscription on unmount
     return () => unsubscribe();
    
   }, []);

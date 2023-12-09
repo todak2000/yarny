@@ -1,6 +1,7 @@
 // pages/index.tsx
-import React from 'react';
 import { NextPage } from 'next';
+import React from 'react';
+
 import WalletLayout from '../layout';
 
 // Define the props for the page component

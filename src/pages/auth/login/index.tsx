@@ -1,33 +1,34 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Import React, Next.js, Formik, and Yup
-import React, { useState } from 'react';
+import { ErrorMessage,Field, Form, Formik } from 'formik';
 import { NextPage } from 'next';
-import Layout from '@/components/layout/Layout';
-import Seo from '@/components/Seo';
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6"
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { ISignupValues } from '@/types';
-import { IoWalletOutline } from "react-icons/io5";
-import { LoginFormArr, YarnyLogo } from '@/constant';
-import Swal from "sweetalert2";
-import { useDispatch, useSelector } from 'react-redux';
-import { SigninHandler, SignupHandler } from '@/pages/api/firebase';
-// Define the data type for the signup form values
-import { YarnyLogoBlackIcon } from '@/constant';
-import { setUser, clearUser } from '@/store';
-import BgImage from '@/pages/components/BgImage';
 import Image from 'next/image';
-import { RegisterFormArr } from '@/constant';
 import { useRouter } from 'next/router';
-import useImageWidth from '@/utils/useImageWidthHook';
+import React, { useState } from 'react';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6"
+import { IoWalletOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from "sweetalert2";
+import * as Yup from 'yup';
+
+import Layout from '@/components/layout/Layout';
 import Loader from '@/components/loader';
-// Define the Yup schema to validate the form values
+import Seo from '@/components/Seo';
+
+import {setUser } from '@/store';
+
+import { LoginFormArr, YarnyLogo } from '@/constant';
+import { SigninHandler } from '@/pages/api/firebase';
+import BgImage from '@/pages/components/BgImage';
+import useImageWidth from '@/utils/useImageWidthHook';
+
+import { ISignupValues } from '@/types';
+
 const SigninSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string().min(8, 'Too short').required('Required'),
 });
 
-// Define the signup component as a Next.js page
 const Signin: NextPage = () => {
     const { push } = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -36,15 +37,14 @@ const Signin: NextPage = () => {
   const {showMobile} = useImageWidth()
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  // Define the initial values for the form
+ 
   const initialValues: ISignupValues = {
     email: '',
     password: ''
   };
 
-  // Define the function to handle the form submission
   const handleSubmit = async (values: ISignupValues) => {
-    console.log(values, 'form values');
+
     setLoading(true);
     const auth = await SigninHandler(values);
     if (auth.statusCode === 200) {
@@ -133,7 +133,7 @@ const Signin: NextPage = () => {
       />
       {name === 'password' &&
       <span className='absolute bottom-0 right-4'>
-       {!showPassword ? <FaRegEye className='text-main' onClick={()=>setShowPassword(true)}/>: <FaRegEyeSlash className='text-main' onClick={()=>setShowPassword(false)}/>}
+       {!showPassword ? <FaRegEye className='text-main cursor-pointer' onClick={()=>setShowPassword(true)}/>: <FaRegEyeSlash className='text-main cursor-pointer' onClick={()=>setShowPassword(false)}/>}
       </span>
       }
       <ErrorMessage

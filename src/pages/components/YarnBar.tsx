@@ -1,68 +1,79 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ImSpinner2 } from 'react-icons/im';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect,useState } from 'react';
 import { BsFillSendFill } from 'react-icons/bs';
-import { TfiWrite } from 'react-icons/tfi';
-import { IoMdNotifications } from 'react-icons/io';
-import YarnCard from './YarnCard';
-import { createNewYarn, getYarns } from '../api';
-import { useGetDashboardYarnData } from '@/utils/yarnHooks';
-import Image from 'next/image';
+import { ImSpinner2 } from 'react-icons/im';
 import { MdOutlineCommentsDisabled } from "react-icons/md";
+import { useSelector } from 'react-redux';
+
+import { useCreateYarn, useGetDashboardYarnData } from '@/utils/yarnHooks';
+
+import YarnCard from './YarnCard';
+import { getYarns } from '../api';
 
 const YarnBar: React.FC = () => {
-  const { push, pathname } = useRouter();
+  const { push } = useRouter();
   const user = useSelector((state: any) => state.user);
   const [yarnData, setYarnData] = useState<any>();
   const [text, setText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
-  const [createLoading, setCreateLoading] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const [referesh, setRefresh] = useState<boolean>(false);
   const { data, isError } = useGetDashboardYarnData();
   const handleLink = (link: string) => {
     push(link);
   };
-
-  const allYarns = async () => {
-    setLoading(true);
-    getYarns().then((users) => {
-      setYarnData(users);
+  const { 
+    createNewYarn, 
+    isLoading: isCreateLoading, 
+    error: createError, 
+    isError:isCreateError, 
+    isSuccess:isCreateSuccess, 
+    data:createData 
+  } =
+  useCreateYarn();
+ 
+  const handleGetAllYarns = () =>{
+    setLoading(true)
+    getYarns().then(res=> {
       setTimeout(() => {
-        setRefresh(false);
-        setLoading(false);
+        setYarnData(res)
+        setLoading(false)
       }, 3000);
-    });
-  };
-  console.log(data, 'data from react qury');
+      console.log(yarnData, 'data from events')
+    })
+  }
+  useEffect(() => {
+    if (isCreateError) {
+      console.log(createError, 'error')
+    }
+    else if(isCreateSuccess || referesh) {
+      handleGetAllYarns()
+       setText('');
+    }
+    
+  }, [isCreateError, isCreateSuccess, referesh]);
+
+useEffect(() => {
+  handleGetAllYarns()
+  
+}, [])
+
+
+  console.log(yarnData, 'yarn data dashbaoird dnaata')
   const createNewYarnData = async () => {
-    setCreateLoading(true);
     const data = {
       text,
       isComment: false, //is yarn as a comment
       isReyarn: false, // is a reyar
       username: user?.username,
+    
+      userRecordId: user.userRecordId,
+      parentYarnRecordId: '',
     };
-    createNewYarn(data).then((user) => {
-      // allYarns()
-      setText('');
-      setCreateLoading(false);
-      console.log(user, 'create yarn result');
-    });
-  };
+    createNewYarn(data)
+  }
 
-  useEffect(() => {
-    allYarns();
-  }, []);
-
-  useEffect(() => {
-    if (!createLoading) {
-      allYarns();
-      console.log('called---');
-    }
-  }, [createLoading, referesh, yarnData?.yarnData?.length]);
 
   return (
     <div className='h-[100vh] w-full bg-black md:bg-white '>
@@ -74,18 +85,19 @@ const YarnBar: React.FC = () => {
             value={text}
             maxLength={1000}
             onChange={(e: any) => setText(e.target.value)}
-          ></textarea>
+          />
 
           <div className='flex flex-row justify-between  p-1'>
             <p className='mt-1 text-xs text-yellow-500'>{1000 - text.length} characters left</p>
             <button
+
               onClick={createNewYarnData}
               className={`${
                 text === '' ? 'bg-transparent md:bg-[#E5E5E5] border-[0.2px] md:border-0 border-main' : 'bg-main'
               } rounded-sm hover:border-1 flex flex-row items-center px-5 font-thin text-white hover:border hover:border-main hover:bg-white hover:text-main h-10`}
-              disabled={createLoading || text === ''}
+              disabled={isCreateLoading || text === ''}
             >
-              {createLoading ? (
+              {isCreateLoading ? (
                 <ImSpinner2 className='animate-spin' />
               ) : (
                 <>
@@ -97,60 +109,27 @@ const YarnBar: React.FC = () => {
         </div>
       )}
       <div className='h-[70vh] overflow-y-auto px-6 py-3 shadow-sm rounded-3xl bg-white'>
-      {data?.yarnData.length === 0 ? (
+      {yarnData?.yarnData.length === 0 ? (
               <div className='flex w-full flex-col items-center justify-center text-center'>
                 <MdOutlineCommentsDisabled  className='text-xl'/>
 
                 <p className='text-gray-500 text-sm'>Yarn no dey! Start am</p>
-              </div>
+                <button
+disabled={loading}
+              onClick={handleGetAllYarns}
+              className=" bg-main rounded-sm hover:border-1 flex flex-row items-center px-5 font-thin text-white hover:border hover:border-main hover:bg-white hover:text-main h-10"
+            >{loading ? (
+              <ImSpinner2 className='animate-spin' />
             ) : (
-              data?.yarnData
-                ?.map((data: any) => {
-                  
-                  const c = {
-                    name: data?.name || 'username',
-                    text: data?.text,
-                    likes: data?.likes,
-                    isReyarn: data?.isReyarn,
-                    reyarn: data?.reyarn,
-                    recordId: data?.recordId,
-                  };
-                  return (
-                    <YarnCard
-                    setRefresh={setRefresh}
-                      key={data?.recordId}
-                      name={c.name}
-                      text={c.text}
-                      likes={c.likes}
-                      isReyarn={c.isReyarn}
-                      reyarn={c.reyarn}
-                      recordId={c.recordId}
-                    />
-                  );
-                })
-                .reverse()
-            )}
-        {/* {loading && (
-          <div className='flex h-20 w-full flex-col items-center justify-center'>
-            <ImSpinner2 className='animate-spin' />
-          </div>
-        )}
-
-        {!loading && (
-          <>
-            {yarnData?.yarnData.length < 0 ? (
-              <div className='flex w-full flex-col items-center justify-center text-center'>
-                <Image
-                  src={emptyYarnImage}
-                  alt='empty yarn image'
-                  width={300}
-                  height={300}
-                />
-                <h2 className='text-gray-500'>No Yarn Available, Yarn!</h2>
+              <>
+                Refresh
+              </>
+            )}{' '}
+            </button>
               </div>
             ) : (
               yarnData?.yarnData
-                ?.map((data: any) => {
+                ?.filter((data:any)=> !data.isComment).map((data: any) => {
                   
                   const c = {
                     name: data?.name || 'username',
@@ -159,6 +138,7 @@ const YarnBar: React.FC = () => {
                     isReyarn: data?.isReyarn,
                     reyarn: data?.reyarn,
                     recordId: data?.recordId,
+                    comments:data?.comments
                   };
                   return (
                     <YarnCard
@@ -166,6 +146,7 @@ const YarnBar: React.FC = () => {
                       key={data?.recordId}
                       name={c.name}
                       text={c.text}
+                      comments={c.comments}
                       likes={c.likes}
                       isReyarn={c.isReyarn}
                       reyarn={c.reyarn}
@@ -175,10 +156,6 @@ const YarnBar: React.FC = () => {
                 })
                 .reverse()
             )}
-          </>
-        )} */}
-
-
       </div>
     </div>
 
