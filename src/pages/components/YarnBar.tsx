@@ -10,7 +10,8 @@ import YarnCard from './YarnCard';
 import { createNewYarn, getYarns } from '../api';
 import { useGetDashboardYarnData } from '@/utils/yarnHooks';
 import Image from 'next/image';
-import { emptyYarnImage } from '@/constant';
+import { MdOutlineCommentsDisabled } from "react-icons/md";
+
 const YarnBar: React.FC = () => {
   const { push, pathname } = useRouter();
   const user = useSelector((state: any) => state.user);
@@ -19,6 +20,7 @@ const YarnBar: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [createLoading, setCreateLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const [referesh, setRefresh] = useState<boolean>(false);
   const { data, isError } = useGetDashboardYarnData();
   const handleLink = (link: string) => {
     push(link);
@@ -29,8 +31,9 @@ const YarnBar: React.FC = () => {
     getYarns().then((users) => {
       setYarnData(users);
       setTimeout(() => {
+        setRefresh(false);
         setLoading(false);
-      }, 2000);
+      }, 3000);
     });
   };
   console.log(data, 'data from react qury');
@@ -59,25 +62,27 @@ const YarnBar: React.FC = () => {
       allYarns();
       console.log('called---');
     }
-  }, [createLoading]);
+  }, [createLoading, referesh, yarnData?.yarnData?.length]);
 
   return (
-    <div className='h-[100vh] w-full bg-white  p-6'>
+    <div className='h-[100vh] w-full bg-black md:bg-white '>
       {user?.username && (
-        <div className='rounded-lg  border-[0.5px] border-[#D9D9D9]'>
+        <div className='rounded-lg m-6'>
           <textarea
-            className='h-20 w-full border-transparent bg-[#F8F8FA]'
+            className='h-20 w-full rounded-sm border-[0.1px] border-main md:border-transparent bg-[#0C0C0C] md:bg-[#F8F8FA] text-white md:text-black'
             placeholder='Yarn wetin dey your mind'
             value={text}
+            maxLength={1000}
             onChange={(e: any) => setText(e.target.value)}
           ></textarea>
 
-          <div className='flex flex-row justify-end  p-1'>
+          <div className='flex flex-row justify-between  p-1'>
+            <p className='mt-1 text-xs text-yellow-500'>{1000 - text.length} characters left</p>
             <button
               onClick={createNewYarnData}
               className={`${
-                text === '' ? 'bg-slate-500' : 'bg-main'
-              }  hover:border-1 flex flex-row items-center px-5 py-2 font-thin text-white hover:border hover:border-main hover:bg-white hover:text-main`}
+                text === '' ? 'bg-transparent md:bg-[#E5E5E5] border-[0.2px] md:border-0 border-main' : 'bg-main'
+              } rounded-sm hover:border-1 flex flex-row items-center px-5 font-thin text-white hover:border hover:border-main hover:bg-white hover:text-main h-10`}
               disabled={createLoading || text === ''}
             >
               {createLoading ? (
@@ -88,19 +93,51 @@ const YarnBar: React.FC = () => {
                 </>
               )}{' '}
             </button>
-            {/* <p className="text-sm mr-4 flex flex-row items-center text-[#232323]">Yarn wetin dey your mind <TfiWrite className="ml-2"/></p> */}
-            {/* <p className="text-sm flex flex-row items-center">Notification <IoMdNotifications  className="ml-2"/></p> */}
           </div>
         </div>
       )}
-      <div className='h-[90vh] overflow-y-auto py-6'>
-        {loading && (
+      <div className='h-[70vh] overflow-y-auto px-6 py-3 shadow-sm rounded-3xl bg-white'>
+      {data?.yarnData.length === 0 ? (
+              <div className='flex w-full flex-col items-center justify-center text-center'>
+                <MdOutlineCommentsDisabled  className='text-xl'/>
+
+                <p className='text-gray-500 text-sm'>Yarn no dey! Start am</p>
+              </div>
+            ) : (
+              data?.yarnData
+                ?.map((data: any) => {
+                  
+                  const c = {
+                    name: data?.name || 'username',
+                    text: data?.text,
+                    likes: data?.likes,
+                    isReyarn: data?.isReyarn,
+                    reyarn: data?.reyarn,
+                    recordId: data?.recordId,
+                  };
+                  return (
+                    <YarnCard
+                    setRefresh={setRefresh}
+                      key={data?.recordId}
+                      name={c.name}
+                      text={c.text}
+                      likes={c.likes}
+                      isReyarn={c.isReyarn}
+                      reyarn={c.reyarn}
+                      recordId={c.recordId}
+                    />
+                  );
+                })
+                .reverse()
+            )}
+        {/* {loading && (
           <div className='flex h-20 w-full flex-col items-center justify-center'>
             <ImSpinner2 className='animate-spin' />
           </div>
         )}
+
         {!loading && (
-          <div>
+          <>
             {yarnData?.yarnData.length < 0 ? (
               <div className='flex w-full flex-col items-center justify-center text-center'>
                 <Image
@@ -114,48 +151,37 @@ const YarnBar: React.FC = () => {
             ) : (
               yarnData?.yarnData
                 ?.map((data: any) => {
-                  ``;
+                  
                   const c = {
                     name: data?.name || 'username',
                     text: data?.text,
                     likes: data?.likes,
-                    isLiked: false,
+                    isReyarn: data?.isReyarn,
                     reyarn: data?.reyarn,
+                    recordId: data?.recordId,
                   };
                   return (
                     <YarnCard
+                    setRefresh={setRefresh}
                       key={data?.recordId}
                       name={c.name}
                       text={c.text}
                       likes={c.likes}
-                      isLiked={c.isLiked}
+                      isReyarn={c.isReyarn}
                       reyarn={c.reyarn}
+                      recordId={c.recordId}
                     />
                   );
                 })
                 .reverse()
             )}
-          </div>
-        )}
+          </>
+        )} */}
 
-        {/* <YarnCard />
-      <YarnCard />
-      <YarnCard />
-      <YarnCard />
-      <YarnCard /> */}
+
       </div>
     </div>
-    // <div
-    //   className={`${
-    //     showSideBar && !showMobile
-    // ? 'w-[450px] bg-[#C4DFE6] py-12 h-[100vh]'
-    //       : showMobile && showSideBar
-    //       ? 'w-full bg-white py-4'
-    //       : 'w-[100px] bg-[#C4DFE6] py-12 h-[100vh]'
-    //   }  flex flex-col  `}
-    // >
 
-    // </div>
   );
 };
 

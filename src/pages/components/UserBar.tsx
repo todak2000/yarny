@@ -14,7 +14,7 @@ import useImageWidth from '@/utils/useImageWidthHook';
 import { MdPersonPin } from "react-icons/md";
 import { authCheck } from '../api/firebase';
 import { getSingleUser } from '../api';
-
+import { Avatar } from '@/constant';
 const UserBar: React.FC = () => {
   const { push, pathname } = useRouter();
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const UserBar: React.FC = () => {
               name: `${querySnapshot.data().firstname} ${querySnapshot.data().lastname} `,
               email: querySnapshot.data().email,
               userDid: querySnapshot.data().userDid,
-              userRecordId: querySnapshot.data().userRecordIdd,
+              userRecordId: querySnapshot.data().userRecordId,
               uid: user.uid,
               isVerified: querySnapshot.data().isVerified,
               username: querySnapshot.data().username,
@@ -71,10 +71,10 @@ const UserBar: React.FC = () => {
     <div
       className={`${
         showSideBar && !showMobile
-          ? 'w-[450px] bg-[#C4DFE6] py-12 h-[100vh]'
+          ? 'w-[450px] bg-black py-12 h-[100vh]'
           : showMobile && showSideBar
-          ? 'w-full bg-white py-4'
-          : 'w-[100px] bg-[#C4DFE6] py-12 h-[100vh]'
+          ? 'w-full bg-black py-4'
+          : 'w-[100px] bg-black py-12 h-[100vh]'
       }  flex flex-col  `}
     >
       {showMobile ? (
@@ -84,14 +84,19 @@ const UserBar: React.FC = () => {
         <div className='flex flex-row items-center justify-end px-6'>
           
           <div>
-          <p className="text-lg text-right font-medium">{user.name}</p>
-          <p className="text-xs text-right text-gray-600">{user.username}</p>
+          <p className="text-lg text-right font-medium text-white">{user.name}</p>
+          <p className="text-xs text-right text-[#f1f1f1]">{user.username}</p>
           </div>
           <div
             className='flex flex-shrink-0 cursor-pointer flex-row ml-4  items-center'
             onClick={() => handleLink('/')}
           >
-            <MdPersonPin className="text-5xl text-main"/>
+            <Image
+              src={Avatar}
+              alt='avatar'
+              width={40}
+              height={40}
+            />
           </div>
         </div>
       )}

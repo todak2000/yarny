@@ -29,10 +29,11 @@ export interface IYarnSchemaProps {
   isComment: boolean; //is yarn as a comment
   ownerId?: string;
   isReyarn: boolean; // is a reyarn
-  reyarnCount?: string;
   likes?: string[];
+  reyarn?: string[];
   username?: string;
   parentYarnRecordId?: string;
+  userRecordId?: string;
 }
 
 export interface IMessageSchemaProps {

@@ -17,17 +17,11 @@ export default function HomePage() {
     <Layout>
       <Seo templateTitle='Yarny:Home' />
       {!showMobile && <BgImage />}
-      <main className='absolute top-0'>
+      <main className='absolute top-0 bg-black md:bg-transparent'>
       <Header />
       <Hero />
       {showMobile && <BgImageMobile />}
       
-        {/* <section className='bg-white'>
-          <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-            
-            <p>hiiii2227777</p>
-          </div>
-        </section> */}
       </main>
     </Layout>
   );

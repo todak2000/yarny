@@ -9,9 +9,10 @@ import { CiLogout } from 'react-icons/ci';
 export const YarnyLogo = '/svg/logoText.svg';
 export const YarnyLogoIcon = '/svg/logo.svg';
 export const YarnyLogoBlackIcon = '/svg/logoblack.svg';
-export const HeroBg = '/images/hero_bg.png';
+export const HeroBg = '/images/hero_bgg.png';
 export const MobileHeroBg = '/images/mobile_bg.png';
 export const emptyYarnImage = '/svg/empty-54.svg';
+export const Avatar = '/svg/avatar.svg';
 export const initialUser: IInitialValues = {
   name: '',
   email: '',
@@ -27,11 +28,13 @@ export const LoginFormArr = [
     id: uuidV4(),
     type: 'email',
     name: 'email',
+    placeholder:'e.g. name@example.com'
   },
   {
     id: uuidV4(),
     type: 'password',
     name: 'password',
+    placeholder:'**************'
   },
 ];
 export const RegisterFormArr = [
@@ -39,63 +42,68 @@ export const RegisterFormArr = [
     id: uuidV4(),
     type: 'email',
     name: 'email',
+    placeholder:'e.g. name@example.com'
   },
   {
     id: uuidV4(),
     type: 'password',
     name: 'password',
+    placeholder:'**************'
   },
   {
     id: uuidV4(),
     type: 'text',
     name: 'firstname',
+    placeholder:'Enter your first name'
   },
   {
     id: uuidV4(),
     type: 'text',
     name: 'lastname',
+    placeholder:'Enter your last name'
   },
   {
     id: uuidV4(),
     type: 'text',
     name: 'username',
+    placeholder:'e.g. name_example001'
   },
 ];
 
 export const MediaSideBarArr = [
   {
     id: uuidV4(),
-    icon: <TbBrandGoogleHome className='mr-2 text-xl' />,
+    icon: <TbBrandGoogleHome className='text-xl' />,
     text: 'Home',
-    redirect: '/',
+    redirect: '/media/dashboard',
   },
   {
     id: uuidV4(),
-    icon: <BiMessageSquareDetail className='mr-2 text-xl' />,
+    icon: <BiMessageSquareDetail className='text-xl' />,
     text: 'Messages',
-    redirect: '/',
+    redirect: '/media/dashboard',
   },
   {
     id: uuidV4(),
-    icon: <BsPersonBoundingBox className='mr-2 text-xl' />,
+    icon: <BsPersonBoundingBox className='text-xl' />,
     text: 'Profile',
-    redirect: '/',
+    redirect: '/media/dashboard',
   },
   {
     id: uuidV4(),
-    icon: <SiGoogleanalytics className='mr-2 text-xl' />,
+    icon: <SiGoogleanalytics className='text-xl' />,
     text: 'Analytics',
-    redirect: '/',
+    redirect: '/media/dashboard',
   },
   {
     id: uuidV4(),
-    icon: <RiSettingsLine className='mr-2 text-xl' />,
+    icon: <RiSettingsLine className='text-xl' />,
     text: 'Settings',
-    redirect: '/',
+    redirect: '/media/dashboard',
   },
   {
     id: uuidV4(),
-    icon: <CiLogout className='mr-2 text-xl' />,
+    icon: <CiLogout className='text-xl' />,
     text: 'Logout',
     redirect: '/',
   },

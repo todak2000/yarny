@@ -83,7 +83,7 @@ const Signin: NextPage = () => {
       <Seo templateTitle='Yarny:Home' />
       {!showMobile && <BgImage />}
 
-      <div className='absolute top-0 grid h-[100vh] w-full grid-cols-1 sm:grid-cols-2'>
+      <div className='absolute top-0 grid h-[100vh] w-full grid-cols-1 sm:grid-cols-2 bg-black md:bg-transparent'>
         <div className=' flex w-full flex-col items-center justify-center px-4 py-6'>
           {user.username ? 
           <>
@@ -92,22 +92,22 @@ const Signin: NextPage = () => {
             <button disabled={loading2} onClick={()=>{
                 setLoading(true)
                 push('/media/dashboard')
-            }}  className='border border-1 rounded-lg hover:bg-main border-main h-[100px] w-[100px] mr-2 hover:text-white text-xs flex flex-col  justify-center items-center'>
-            {loading ? <Loader />:<Image  className="mb-2" src={YarnyLogoBlackIcon} alt='yarny logo' width={17} height={17} />}
+            }}  className='border border-1 rounded-lg text-white hover:bg-main border-main h-[100px] w-[100px] mr-2 hover:text-secondary text-xs flex flex-col  justify-center items-center'>
+            {loading ? <Loader />:<Image  className="mb-2" src={YarnyLogo} alt='yarny logo' width={17} height={17} />}
                 Social Media
             </button>
             <button disabled={loading} onClick={()=>{
                 setLoading2(true)
                 push('/wallet/dashboard')
-            }} className='border border-1 rounded-lg hover:bg-secondary border-secondary h-[100px] w-[100px] ml-2 text-xs flex flex-col  justify-center items-center'>
-            {loading2 ? <Loader />:<IoWalletOutline className="text-3xl text-black mb-2"/>}
+            }} className='border border-1 rounded-lg text-white hover:bg-secondary border-secondary hover:text-main h-[100px] w-[100px] ml-2 text-xs flex flex-col  justify-center items-center'>
+            {loading2 ? <Loader />:<IoWalletOutline className="text-3xl text-white mb-2"/>}
                 Web 5 wallet
                 </button>
           </div>
           </>
           :
           <>
-          <Image onClick={()=>push('/')} src={YarnyLogo} alt='yarny logo' width={100} height={100} />
+          <Image onClick={()=>push('/')} src={YarnyLogo} alt='yarny logo' width={30} height={30} />
 
 <p className="text-secondary text-lg font-bold font-primary">Login</p>
 <Formik
@@ -117,7 +117,7 @@ const Signin: NextPage = () => {
 >
   {({ isSubmitting }) => (
     <Form className='w-full sm:w-2/3'>
-      {LoginFormArr.map(({id, type, name}: {id: string, type: string, name: string})=>{
+      {LoginFormArr.map(({id, type, name, placeholder}: {id: string; type: string; name: string; placeholder: string})=>{
           return (
               <span key={id} className='relative'>
           <label htmlFor={name} className='my-2 block text-sm capitalize'>
@@ -127,17 +127,19 @@ const Signin: NextPage = () => {
         type={showPassword ? 'text': type} 
         name={name} 
         id={name} 
-        className='border-1 mb-2 w-full rounded-sm border border-secondary'
+        autocomplete='off'
+        placeholder={placeholder}
+        className='border-1 h-[48px] mb-1 w-full rounded-sm border-[0.3px] border-main bg-[#0C0C0C] text-white'
       />
       {name === 'password' &&
       <span className='absolute bottom-0 right-4'>
-      {!showPassword ? <FaRegEye onClick={()=>setShowPassword(true)}/>: <FaRegEyeSlash onClick={()=>setShowPassword(false)}/>}
+       {!showPassword ? <FaRegEye className='text-main' onClick={()=>setShowPassword(true)}/>: <FaRegEyeSlash className='text-main' onClick={()=>setShowPassword(false)}/>}
       </span>
       }
       <ErrorMessage
         name={name}
         component='div'
-        className='mb-2 text-xs text-red-500'
+        className='mb-1 text-xs text-yellow-500'
       />
           </span>
           )
@@ -145,11 +147,11 @@ const Signin: NextPage = () => {
       <button
         disabled={isSubmitting}
         type='submit'
-        className='hover:border-1 my-3 bg-main px-5 py-2 font-thin text-white hover:border hover:border-main hover:bg-white hover:text-main h-12 w-full sm:w-auto'
+        className='rounded-3xl hover:border-1 my-3 bg-main px-10 py-2 font-thin text-white hover:border hover:border-main hover:bg-white hover:text-main h-12 w-full sm:w-auto'
       >
         {loading ?  <Loader /> : 'Submit'}
       </button>
-      <p className='text-xs text-left'>Yet to register? <span className='text-main cursor-pointer' onClick={()=>push('/auth/register')}>Register here</span></p>
+      <p className='text-lg text-left text-white mt-2'>Yet to register? <span className='text-main cursor-pointer' onClick={()=>push('/auth/register')}>Register here</span></p>
     </Form>
   )}
 </Formik>

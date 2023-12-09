@@ -11,16 +11,19 @@ const today = new Date();
 const date = today.toJSON().slice(0, 10).replace(/-/g, '/');
 
 const ConstructYarn = async (data: IYarnSchemaProps) => {
+  // recordId: string,
+  // userRecordId: string
   return {
     '@context': yarn.context,
     '@type': yarn.type,
     yarnDetails: {
       text: data.text,
       viewCount: data.viewCount ? data.viewCount : 0,
-      isComment: data.isComment ? data.isComment : 0, //is yarn as a comment
+      isComment: data.isComment ? data.isComment : false, //is yarn as a comment
       ownerId: await yarn.createDID(),
-      isReyarn: data.isReyarn, // is a reyarn
-      reyarnCount: data.reyarnCount ? data.reyarnCount : 0,
+      reyarn:data.isReyarn ? (await updateReYarn(data.parentYarnRecordId as string,data.userRecordId as string)).reyarn : (await getReYarn(data.parentYarnRecordId as string)).reyarn,
+      isReyarn: data.isReyarn ? data.isReyarn : false, // is a reyarn
+      // reyarnCount: data.isReyarn ? data.reyarnCount : 0,
       likes: data.likes ? data.likes : [], // array of userDids
       parentYarnRecordId: data.parentYarnRecordId
         ? data.parentYarnRecordId
@@ -51,9 +54,12 @@ export const getYarns = async (): Promise<any> => {
         yarns.push( {
           name: y?.web5?.username || 'username',
           text: y?.yarnDetails?.text,
-          likes: y?.yarnDetails?.likes?.length,
+          likes: y?.yarnDetails?.likes ? y?.yarnDetails?.likes : [],
           recordId:y?.recordId,
-          reyarn : y?.yarnDetails?.reyarnCount
+          isComment: y?.yarnDetails?.isComment,
+          parentYarnRecordId: y?.yarnDetails?.isReyarn || y?.yarnDetails?.isComment ? y?.yarnDetails?.parentYarnRecordId : null,
+          isReyarn:y?.yarnDetails?.isReyarn ? y?.yarnDetails?.isReyarn : false,
+          reyarn : (await getReYarn(d._recordId as string)).reyarn || []
         });
       });
       return {
@@ -169,6 +175,67 @@ export const createNewYarn = async (
     }
   }
 };
+
+// Update REyarn Yarn
+export const getReYarn = async (
+  recordId: string
+) => {
+  const web5 = await yarn.web5();
+
+  const { records } = await web5.dwn.records.query({
+    message: {
+      filter: {
+        recordId: recordId,
+      },
+    },
+  });
+
+  const reyarnData = await records[0]?.data?.json();
+
+;
+
+
+  return {
+    status: 200,
+    reyarn: reyarnData?.yarnDetails?.reyarn || [],
+    message: 'Yarn Data updated Successfully on Web5',
+  };
+  
+
+  
+};
+
+// Update REyarn Yarn
+export const updateReYarn = async (
+  recordId: string,
+  userRecordId: string
+) => {
+  const web5 = await yarn.web5();
+
+  const { records } = await web5.dwn.records.query({
+    message: {
+      filter: {
+        recordId: recordId,
+      },
+    },
+  });
+
+  const reyarnData = await records[0]?.data?.json();
+
+  let reyarnArr = reyarnData?.yarnDetails?.reyarn || [];
+
+  reyarnArr = [...reyarnArr, userRecordId];
+
+  return {
+    status: 200,
+    reyarn: reyarnArr,
+    message: 'Yarn Data updated Successfully on Web5',
+  };
+  
+
+  
+};
+
 
 // Update yarn Data
 export const updateYarn = async (

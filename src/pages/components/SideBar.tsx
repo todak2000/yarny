@@ -12,11 +12,11 @@ import Swal from "sweetalert2";
 import { handleSignOut } from '../api/firebase';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import useImageWidth from '@/utils/useImageWidthHook';
-
+import { Avatar } from '@/constant';
 const SideBar: React.FC = () => {
   const { push, pathname } = useRouter();
   const dispatch = useDispatch();
-
+  const user = useSelector((state: any) => state.user);
 
   const [showDropDown, setShowDropDown] = useState(false);
   const [showSideBar, setShowSideBar] = useState(true);
@@ -79,23 +79,32 @@ const SideBar: React.FC = () => {
     <div
       className={`${
         showSideBar && !showMobile
-          ? 'w-[250px] bg-[#C4DFE6] py-12 h-[100vh]'
+          ? 'w-[150px] bg-black py-12 h-[100vh]'
           : showMobile && showSideBar
-          ? 'w-full bg-white py-4'
-          : 'w-[100px] bg-[#C4DFE6] py-12 h-[100vh]'
+          ? 'w-full bg-black py-4'
+          : 'w-[80px] bg-black py-12 h-[100vh]'
       }  flex flex-col  `}
     >
       {showMobile ? (
         <div className='flex flex-row  items-center justify-between px-6'>
-          <Image src={YarnyLogoIcon} alt='yarny logo' width={17} height={17} />
+          <div className='flex flex-row'>
+          <Image
+              src={Avatar}
+              alt='avatar'
+              width={25}
+              height={25}
+            />
+            <p className='text-white ml-2'>{user?.username ? user.username : '@anonymous'}</p>
+          </div>
+          <Image src={YarnyLogo} alt='yarny logo' width={13} height={13} />
           {showDropDown ? (
             <SlClose
               onClick={handleClick}
-              className='flex text-lg text-green-900 md:hidden cursor-pointer'
+              className='flex text-lg text-white md:hidden cursor-pointer'
             />
           ) : (
             <RxHamburgerMenu
-              className='flex text-lg text-green-900 md:hidden cursor-pointer'
+              className='flex text-lg text-white md:hidden cursor-pointer'
               onClick={handleClick}
             />
           )}
@@ -104,24 +113,25 @@ const SideBar: React.FC = () => {
         <div className='flex flex-row items-center justify-between px-6'>
           <div
             className='flex flex-shrink-0 cursor-pointer flex-row  items-center'
-            onClick={() => handleLink('/')}
           >
             <Image
               src={showSideBar ? YarnyLogo : YarnyLogoIcon}
               alt='yarny logo'
-              width={showSideBar ? 100 : 17}
-              height={showSideBar ? 100 : 17}
+              width={showSideBar ? 30 : 13}
+              height={showSideBar ? 30 : 13}
+              onClick={() => handleLink('/')}
+              className='cursor-pointer'
             />
           </div>
 
           {showSideBar ? (
             <IoIosArrowBack
-              className='text-2xl text-main'
+              className='text-2xl text-white cursor-pointer'
               onClick={toggleSideBar}
             />
           ) : (
             <IoIosArrowForward
-              className='text-2xl text-main'
+              className='text-2xl text-white cursor-pointer'
               onClick={toggleSideBar}
             />
           )}
@@ -131,7 +141,7 @@ const SideBar: React.FC = () => {
       <div
         className={` ${
           showMobile && showDropDown
-            ? 'absolute top-16 right-0 grid w-1/2 grid-cols-1 gap-4 bg-white py-4 drop-shadow-sm '
+            ? 'absolute top-16 right-0 grid w-1/2 grid-cols-1 gap-4 bg-white text-main py-4 drop-shadow-sm '
             : showMobile && !showDropDown
             ? 'hidden'
             : 'my-3 flex-col items-center py-4 '
@@ -145,13 +155,13 @@ const SideBar: React.FC = () => {
                 onClick={() => { text === "Logout" ? handleOut():
                   handleLink(redirect);
                 }}
-                className='mx-4 flex cursor-pointer flex-row items-center rounded-lg py-3 px-2 text-sm font-thin text-main hover:bg-main hover:font-medium hover:text-secondary'
+                className='mx-4 flex cursor-pointer flex-row items-center rounded-lg py-3 px-3 text-sm font-thin text-main md:text-white hover:bg-main '
               >
                 {icon}
                 {
                     !showSideBar && !showMobile
                     ? ''
-                    : text
+                    : <span className='ml-2'>{text}</span>
                 }
                 
               </p>

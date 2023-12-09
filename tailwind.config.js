@@ -32,9 +32,10 @@ module.exports = {
           900: 'rgb(var(--tw-color-primary-900) / <alpha-value>)',
         },
         dark: '#222222',
-        'main': '#4F28EC',
-        // 'main': '#E03767',
-        'secondary': '#53D4F4'
+        // 'main': '#4F28EC',
+        'main': '#35876C',
+        // 'secondary': '#53D4F4'
+        'secondary': '#04724D'
       },
       keyframes: {
         flicker: {

@@ -74,12 +74,12 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="bg-transparent  flex w-full flex-row items-center justify-between px-4 py-[40px]  md:px-[120px]">
+    <div className="bg-transparent  flex w-full flex-row items-center justify-between px-4 py-[40px]  md:pl-[120px] md:pr-4">
       <div
         className="flex flex-shrink-0 cursor-pointer flex-row  items-center"
         onClick={() => handleLink("/")}
       >
-        <Image src={YarnyLogo} alt="yarny logo" width={100} height={100} />
+        <Image src={YarnyLogo} alt="yarny logo" width={30} height={30} />
         
       </div>
       <RxHamburgerMenu
@@ -96,7 +96,7 @@ const Header: React.FC = () => {
       >
         <p onClick={() => {
                 handleLink("/auth/login");
-              }} className=" ml-3  flex cursor-pointer flex-row items-center text-xs text-black hover:font-bold hover:text-black md:mr-4 md:text-center">
+              }} className=" ml-3  flex cursor-pointer flex-row items-center text-lg text-white hover:font-bold hover:text-main md:mr-4 md:text-center">
               Login
             </p>
       </div>

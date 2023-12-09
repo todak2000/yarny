@@ -9,8 +9,9 @@ const BgImage: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <Image src={HeroBg} alt="yarny logo" width={imageWidth} className="xl:w-[1380px]" height={400} />
+    <div className='bg-black flex flex-row justify-between items-center'>
+      <div></div>
+      <Image src={HeroBg} alt="yarny logo" width={imageWidth/2} className="xl:w-[680px] h-[100vh]" height={600} />
     </div>
   );
 };
