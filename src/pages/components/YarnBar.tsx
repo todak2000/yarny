@@ -17,7 +17,9 @@ const YarnBar: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [createLoading, setCreateLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
+
 const {data, isError} = useGetDashboardYarnData()
+
   const handleLink = (link: string) => {
     push(link);
   };
@@ -36,6 +38,7 @@ const {data, isError} = useGetDashboardYarnData()
     );
   };
   console.log(data, 'data from react qury')
+  
   const createNewYarnData = async () => {
     setCreateLoading(true)
     const data = {

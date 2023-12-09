@@ -5,7 +5,7 @@ import {
   sendEmailVerification,
   signInWithEmailAndPassword,
   User,
-  signOut
+  signOut,
 } from 'firebase/auth';
 
 import { db } from '@/firebase';
@@ -15,51 +15,50 @@ import { createNewUser, getSingleUser } from '@/web5/userSchema';
 export async function authCheck() {
   try {
     // get the email and password from the request body
-   
+
     let singleItem;
     const authh = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const singleItemRef = doc(db, 'Users', user.uid);
         const querySnapshot = await getDoc(singleItemRef);
-    if (querySnapshot.exists()) {
-      singleItem = {
-        id: user.uid,
-        firstname: querySnapshot.data().firstname,
-        lastname: querySnapshot.data().lastname,
-        username: querySnapshot.data().username,
-        email: querySnapshot.data().email,
-        userRecordId: querySnapshot.data().userRecordId,
-        isVerified: querySnapshot.data().isVerified,
-        isOnline: querySnapshot.data().isOnline,
-        userDid: querySnapshot.data().userDid,
-        loginAttempts: querySnapshot.data().loginAttempts,
-        location: querySnapshot.data().location,
-        device: querySnapshot.data().device,
-      };
-      const res: any = await getSingleUser(querySnapshot.data().userRecordId);
+        if (querySnapshot.exists()) {
+          singleItem = {
+            id: user.uid,
+            firstname: querySnapshot.data().firstname,
+            lastname: querySnapshot.data().lastname,
+            username: querySnapshot.data().username,
+            email: querySnapshot.data().email,
+            userRecordId: querySnapshot.data().userRecordId,
+            isVerified: querySnapshot.data().isVerified,
+            isOnline: querySnapshot.data().isOnline,
+            userDid: querySnapshot.data().userDid,
+            loginAttempts: querySnapshot.data().loginAttempts,
+            location: querySnapshot.data().location,
+            device: querySnapshot.data().device,
+          };
+          const res: any = await getSingleUser(
+            querySnapshot.data().userRecordId
+          );
 
-      return {
-        statusCode: 200,
-        user: singleItem,
-        fromDWN: res.status === 200 ? res.userData : null,
-      };
-    }
-        
-  } else {
-    return {
-      statusCode: 400
-    };
-  }
+          return {
+            statusCode: 200,
+            user: singleItem,
+            fromDWN: res.status === 200 ? res.userData : null,
+          };
+        }
+      } else {
+        return {
+          statusCode: 400,
+        };
+      }
     });
 
-    return authh
-
-    
+    return authh;
   } catch (error: any) {
-    const errorMessage = 'Oops! an error occured'
+    const errorMessage = 'Oops! an error occured';
     return {
       statusCode: 405,
-      message: errorMessage
+      message: errorMessage,
     };
   }
 }
@@ -105,13 +104,13 @@ export async function SigninHandler(data: any) {
       return { statusCode: 200, user: { error: 'No such Item exist!' } };
     }
   } catch (error: any) {
-    let errorMessage = 'Oops! an error occured'
-    if(error.message === 'Firebase: Error (auth/invalid-credential).'){
-      errorMessage = 'Email/Password is incorrect'
+    let errorMessage = 'Oops! an error occured';
+    if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+      errorMessage = 'Email/Password is incorrect';
     }
     return {
       statusCode: 405,
-      message: errorMessage
+      message: errorMessage,
     };
   }
 }
@@ -186,7 +185,7 @@ export const handleSignOut = async (): Promise<
     const logout = await signOut(auth);
     return {
       statusCode: 200,
-      message: "Success!",
+      message: 'Success!',
     };
   } catch (error: any) {
     return {
