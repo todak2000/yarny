@@ -62,7 +62,7 @@ Navigate to the project directory and install the dependencies:
 
 ```
 
-cd yarn
+cd yarny
 yarn install
 
 ```
