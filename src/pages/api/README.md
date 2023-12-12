@@ -62,6 +62,208 @@ datePublished: string;
   }
 ```
 
+### clearing User Data (DID) on the DWN
+
+**handleSignOut()**
+
+**Description:**
+
+The `handleSignOut` function is used to disconnect and logout of the web5 network seamlessly providng the following data.
+
+**Returns:**
+
+```
+<!-- success result -->
+  {
+    status: number,
+    message: string,
+  }
+  <!-- OR -->
+  <!-- failure result -->
+  {
+      status: number;
+      message: string;
+  }
+```
+
+### create Yarn Comment Data (DID) on the DWN
+
+**createComment()**
+
+**Description:**
+
+The `createComment` function is used create Yarn comments in the local/remote DWN on the web5 network seamlessly providing the following data.
+
+**Parameters:**
+data{
+text: string,
+isComment: boolean,
+isReyarn: boolean,
+username: string,
+userRecordId: string,
+parentYarnRecordId: strng,
+}
+
+**Returns:**
+
+```
+<!-- success result -->
+  {
+    data: object,
+    status: number,
+    message: string,
+    recordId: string,
+    userDiD: string,
+  }
+  <!-- OR -->
+  <!-- failure result -->
+  {
+      status: number;
+      message: string;
+  }
+```
+
+### toggle like in User Yarn Data (DID) on the DWN
+
+**toggleLikeYarn()**
+
+**Description:**
+
+The `toggleLikeYarn` function is used to toggle between liking and un_liking a Yarn in the local/remote DWN on the web5 network seamlessly providing the following data.
+
+**Parameters:**
+data{
+yarnId: string,
+UserId: string,
+}
+
+**Returns:**
+
+```
+<!-- success result -->
+  {
+    data:
+    status: number,
+    message: string,
+    recordId: string,
+    userDiD: string,
+  }
+  <!-- OR -->
+  <!-- failure result -->
+  {
+      status: number;
+      message: string;
+  }
+```
+
+### getting all Yarn Data (DID) on the DWN
+
+**getYarn()**
+
+**Description:**
+
+The `getYarn` function is used to get all the Yarns available from the local/remote DWN on the web5 network seamlessly providng the following data.
+
+**Parameters:**
+
+```
+  {
+    recordId: string,
+    updateData: {
+      personalDetails: {
+        firstname: string;
+        lastname: string;
+        phone: string;
+        email: string;
+        photo: string;
+        dateOfBirth: string;
+        gender: string;
+      };
+      web5: {
+        didResolverName: string;
+        didResolverPassword: string;
+        identifier: string;
+      };
+      others: {
+        datePublished: string;
+      };
+    }
+  }
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```{
+    yarn: array
+    status: number,
+    message: string,
+    recordId: string,
+    userDiD: string,
+  }
+ <!-- success/failure result -->
+  {
+      status: number;
+      message: string;
+  }
+
+```
+
+### creates new Yarn Data (DID) on the DWN
+
+**createNewYarnn()**
+
+**Description:**
+
+The `createNewYarn` function is used to create new Yarn data on the local/remote DWN on the web5 network seamlessly providng the following data.
+
+**Parameters:**
+
+```
+  {
+    recordId: string,
+    data: {
+          text: string,
+          isComment: boolean
+          isReyarn: boolean,
+          username: string,
+      };
+      web5: {
+        didResolverName: string;
+        didResolverPassword: string;
+        identifier: string;
+      };
+      others: {
+        datePublished: string;
+      };
+    }
+
+```
+
+**Returns:**
+
+A promise that resolves with the following object:
+
+```{
+    text: string
+    status: number,
+    message: string,
+    recordId: string,
+    userDiD: string,
+    username: string,
+  }
+ <!-- success/failure result -->
+  {
+      status: number;
+      message: string;
+  }
+
+```
+
+##### Few available API ,which are not consumed
+
 ### Updating Existing User Data (DID) on the DWN
 
 **updateUser()**
@@ -208,7 +410,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contributors
 
 Web5 Hackathon Team
-[Obadaki Emmanuel](https://github.com/todak2000)
-[David Grace](https://github.com/todak2000)
-[Oludiya Daniel](https://github.com/todak2000)
-[Olagunju Daniel ](https://github.com/todak2000)
+[Obadaki Emmanuel](https://github.com/Gudnuel) FrontEnd
+[David Grace](Product Manager)
+[Oludiya Daniel](Product Designer)
+[Olagunju Daniel ](https://github.com/todak2000) FrontEnd and BackEnd
